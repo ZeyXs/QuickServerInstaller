@@ -1,5 +1,6 @@
 package fr.zeyx.qsi;
 
+
 import java.util.logging.Logger;
 
 public class QuickServerInstaller {
