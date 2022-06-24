@@ -1,4 +1,4 @@
-package fr.zeyx.qsi;
+package fr.zeyx.qsi.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -11,12 +11,10 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @SuppressWarnings("ALL")
-public class ServerUtils {
+public class Server {
 
     private static HttpURLConnection connection;
 
@@ -80,7 +78,13 @@ public class ServerUtils {
                 json, new TypeToken<HashMap<String, Object>>() {}.getType()
         );
 
-        return (ArrayList<Integer>) deserializedJson.get("builds");
+        ArrayList<Double> doubleList = (ArrayList<Double>) deserializedJson.get("builds");
+        ArrayList<Integer> intList = new ArrayList<>();
+        for (int i=0; i < doubleList.size(); i++) {
+            intList.add(doubleList.get(i).intValue());
+        }
+
+        return intList;
     }
 
     public static String getFAWEDownloadLink() {
@@ -96,5 +100,14 @@ public class ServerUtils {
 
     public static String getPaperDownloadLink(String version, int build) {
         return "https://api.papermc.io/v2/projects/paper/versions/" + version + "/builds/" + build + "/downloads/paper-" + version + "-" + build + ".jar";
+    }
+
+    public static boolean isVersionValid(String version, String versionMin, String versionMax) {
+        Version version1 = new Version(version);
+        Version versionMin1 = new Version(versionMin);
+        Version versionMax1 = new Version(versionMax);
+
+        // normal <= max && normal >= min
+        return version1.compareTo(versionMin1) == 1 && version1.compareTo(versionMax1) == -1 || version1.equals(versionMin1) || version1.equals(versionMax1);
     }
 }
