@@ -1,6 +1,6 @@
 package fr.zeyx.qsi.utils;
 
-public class Version implements Comparable<Version> {
+public class VersionUtils implements Comparable<VersionUtils> {
 
     private String version;
 
@@ -8,7 +8,7 @@ public class Version implements Comparable<Version> {
         return this.version;
     }
 
-    public Version(String version) {
+    public VersionUtils(String version) {
         if(version == null)
             throw new IllegalArgumentException("Version can not be null");
         if(!version.matches("[0-9]+(\\.[0-9]+)*"))
@@ -17,7 +17,7 @@ public class Version implements Comparable<Version> {
     }
 
     @Override
-    public int compareTo(Version that) {
+    public int compareTo(VersionUtils that) {
         if(that == null)
             return 1;
         String[] thisParts = this.get().split("\\.");
@@ -44,7 +44,7 @@ public class Version implements Comparable<Version> {
             return false;
         if(this.getClass() != that.getClass())
             return false;
-        return this.compareTo((Version) that) == 0;
+        return this.compareTo((VersionUtils) that) == 0;
     }
 
 }

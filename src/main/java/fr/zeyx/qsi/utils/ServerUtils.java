@@ -14,7 +14,7 @@ import java.net.URL;
 import java.util.*;
 
 @SuppressWarnings("ALL")
-public class Server {
+public class ServerUtils {
 
     private static HttpURLConnection connection;
 
@@ -26,6 +26,7 @@ public class Server {
         BufferedReader reader;
         String line;
         StringBuffer responseContent = new StringBuffer();
+
         try {
             URL url = new URL(paperUrl);
             connection = (HttpURLConnection) url.openConnection();
@@ -103,9 +104,9 @@ public class Server {
     }
 
     public static boolean isVersionValid(String version, String versionMin, String versionMax) {
-        Version version1 = new Version(version);
-        Version versionMin1 = new Version(versionMin);
-        Version versionMax1 = new Version(versionMax);
+        VersionUtils version1 = new VersionUtils(version);
+        VersionUtils versionMin1 = new VersionUtils(versionMin);
+        VersionUtils versionMax1 = new VersionUtils(versionMax);
 
         // normal <= max && normal >= min
         return version1.compareTo(versionMin1) == 1 && version1.compareTo(versionMax1) == -1 || version1.equals(versionMin1) || version1.equals(versionMax1);
